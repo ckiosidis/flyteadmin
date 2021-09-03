@@ -24,6 +24,7 @@ const (
 	State                 = "state"
 	ExecutionID           = "execution_id"
 	NodeID                = "node_id"
+	StartNode             = "start-node"
 	NodeExecutionID       = "node_execution_id"
 	TaskID                = "task_id"
 	OccurredAt            = "occurred_at"

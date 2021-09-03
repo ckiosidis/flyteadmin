@@ -1,6 +1,8 @@
 package validation
 
 import (
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"testing"
 
 	"github.com/flyteorg/flyteidl/gen/pb-go/flyteidl/event"
@@ -31,6 +33,16 @@ func TestValidateNodeExecutionIdentifier(t *testing.T) {
 		NodeId:      "node id",
 	})
 	assert.Nil(t, err)
+}
+
+func TestValidateNodeExecutionIdentifier_UnsupportedFields(t *testing.T) {
+	err := ValidateNodeExecutionIdentifier(&core.NodeExecutionIdentifier{
+		ExecutionId: &testExecutionID,
+		NodeId:      "start-node",
+	})
+	assert.NotNil(t, err)
+	assert.Equal(t, status.Code(err), codes.Unimplemented)
+	assert.Equal(t, status.FromContextError(err).Message(), "not supported for start-node")
 }
 
 func TestValidateNodeExecutionIdentifier_MissingFields(t *testing.T) {

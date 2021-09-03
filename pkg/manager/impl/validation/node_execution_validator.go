@@ -18,6 +18,10 @@ func ValidateNodeExecutionIdentifier(identifier *core.NodeExecutionIdentifier) e
 		return shared.GetMissingArgumentError(shared.NodeID)
 	}
 
+	if identifier.NodeId == shared.StartNode {
+		return shared.GetNotSupportedError(shared.StartNode)
+	}
+
 	return ValidateWorkflowExecutionIdentifier(identifier.ExecutionId)
 }
 
